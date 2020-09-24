@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1584210663 source:d:\program\c++ algorithm\uva\test\main.cpp
+	<cstdio>
+	<iostream>
+	<queue>
+	<algorithm>
+	<cstring>
+
+1597592075 source:c:\david\uva\test\main.cpp
+	<bits/stdc++.h>
+

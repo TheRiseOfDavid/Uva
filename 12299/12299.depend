@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1583211367 source:c:\temp_folder\uva\12299\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+	<string>
+

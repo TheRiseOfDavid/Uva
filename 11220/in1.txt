@@ -1,0 +1,30 @@
+8
+
+Hey good lawyer 
+as I previously previewed 
+yam does a soup
+
+First I give money to Teresa 
+after I inform dad of 
+your horrible soup
+
+x
+
+xyxy
+
+We
+One Two One Two One Two Eight Three Four 
+
+In this section we introduce the Algorithm in detail 
+for ease of understanding our algorithm
+Then we give the definition of the problem
+
+The experimental results illustrate that our algorithm is fast
+The set find-union may be used to improve the time complexity
+The bit-parallel algorithm is utilized efficiently in other variants
+It may speed up our algorithm or previously published algorithms with the bit-parallel algorithms
+
+The paper studies how to improve the trading decision of Taiwan stocks with the information of US stock market
+Our method first aligns the trading days between Taiwan and US stock markets
+Next the similarity between the portfolio index constructed from Taiwan stocks and one of the US stock indices
+Finally the consensus signals of PI are determined by the majority vote scheme with the weighted functions calculated from the similarity

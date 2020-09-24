@@ -1,0 +1,9 @@
+America 2
+Australia 1
+Canada 3
+England 3
+Germany 2
+India 1
+Netherlands 1
+Spain 5
+Switzerland 2
