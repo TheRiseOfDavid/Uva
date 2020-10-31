@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1603898748 source:d:\program\c++ algorithm\uva\sam\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+
