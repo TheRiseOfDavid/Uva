@@ -11,16 +11,16 @@ int oo ;
 int max_lrs = 0 , lrs_index = 0 , lrs_repeat = 0 ;
 
 struct node{
-    int start , end_ ,slink ;
+    int start , end ,slink ;
     map<char,int> next ;
 
     int edge_length(){
-        return min(end_ , pos+1) - start ;
+        return min(end , pos+1) - start ;
     }
 
-    int init(int st , int ed = oo){
+    void init(int st , int ed = oo){
         start = st ;
-        end_ = ed ;
+        end = ed ;
         slink = 0 ;
         next.clear() ;
     }
@@ -47,12 +47,14 @@ bool walkdown(int node){
 
 void st_init(){
     //tree root is 1 not zero
-    needSL = 0 , pos = -1 , remainder_ = 0 ;
-    active_node = 0 , active_e = 0 , active_len = 0 ;
+    needSL = remainder_ = 0 ;
+    active_node = active_e = active_len = 0 ;
+    pos = -1 ;
 
-    cnt = 1 , root = 1 ;
+    cnt = root = 1 ;
     active_node = 1 ;
     tree[cnt++].init(-1,-1);
+    return ;
 }
 
 void st_extend(char c){
@@ -95,15 +97,16 @@ void st_extend(char c){
             active_node = tree[active_node].slink > 0 ? tree[active_node].slink : root ;
         }
     }
-
+    return ;
 }
 
 void debug(){
 	for(int i = 0 ; i < cnt ; i++){
-        cout << i << ' ' << tree[i].start << ' ' << tree[i].end_ << ' ' << tree[i].slink << '\n' ;
+        cout << i << ' ' << tree[i].start << ' ' << tree[i].end << ' ' << tree[i].slink << '\n' ;
         for(auto it : tree[i].next)
             cout << it.first << ' ' << it.second << '\n' ;
     }
+    return ;
 }
 
 void lrs_dfs(int r , int len , int repeats ){ //dfs for suffix tree
@@ -115,6 +118,7 @@ void lrs_dfs(int r , int len , int repeats ){ //dfs for suffix tree
         max_lrs = len ;
         lrs_index = tree[r].start - len ;
     }
+    return ;
 }
 
 
@@ -128,6 +132,7 @@ int main()
     cin >> n ;
     while(n--){
         cin >> text ;
+
         st_init() ;
         text += "$" ;
         oo = text.length() ;
