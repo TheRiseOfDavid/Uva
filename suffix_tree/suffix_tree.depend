@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1604335915 source:d:\program\c++ algorithm\uva\suffix_tree\main.cpp
+	<iostream>
+	<stdio.h>
+	<string>
+
