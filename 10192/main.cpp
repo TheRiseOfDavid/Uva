@@ -22,28 +22,28 @@ int lcs(){
     dict.clear() ;
     for(int i = strA.length() ; i > 0 ; i--) dict[strA[i]].push_back(i) ;
 
-    int k = 1 ;
+    int k = 0 ;
     for(int i = 1 ; i < strB.length() ; i++){
         for(int j = 0 ; j < dict[strB[i]].size() ; j++)
-            num[k++] = dict[strB[i]][j] ;
+            num[++k] = dict[strB[i]][j] ;
     }
-
+    if(k==0) return 0 ;
     //memset(t ,-1 , sizeof(t));
     d[1] = -1 , t[1] = 1 ;
-    int len = 1 , cur ;
+    int len = 1, cur ;
     //debug
 //    cout << "k is " << k << '\n' ;
 //    cout << "num is \n" ;
 //    for(int i = 1 ; i < k ; i++) cout << num[i] << ' ' ;
 //    cout << "\n\n" ;
-    for(int i = 1 ; i < k ; i++ ){
+    for(int i = 1 ; i <= k ; i++ ){
         //debug
 //        cout << "i is " << i << '\n' ;
 //        cout << "len is " << len << '\n' ;
 //        cout << num[i] << ' ' << num[t[len]] << '\n' ;
         if(num[i] > num[t[len]]) t[++len] = i , d[i] = t[len-1] ;
         else{
-            cur = bs(0,len,i);
+            cur = bs(1,len,i);
             //debug
             //cout << "cur is " << cur << '\n' ;
             t[cur] = i ;
@@ -66,9 +66,10 @@ int main()
     n = 1 ;
     while(cin >> strA && strA != "#"){
         cin >> strB ;
-        strA = strA + " " ;
-        strB = strB + " " ;
-        cout << "Case #" << n++ << ": you can visit at most " << lcs() << " cities.\n";
+        strA = " " + strA;
+        strB = " " + strB;
+        cout << lcs() << '\n' ;
+        //cout << "Case #" << n++ << ": you can visit at most " << lcs() << " cities.\n";
     }
     return 0;
 }
