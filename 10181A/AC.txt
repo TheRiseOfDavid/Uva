@@ -1,0 +1,144 @@
+#include <bits/stdc++.h>
+#define LOCAL
+using namespace std;
+int goal[18][2];
+set<string> vis;
+int dx[] = {0,0,1,-1};
+int dy[] = {1,-1,0,0};
+struct state {
+	int h=-1, step=0 , x , y ;
+	int board[4][4];
+	string mov;
+	bool operator < (const state &rhs) const { //計算步驟
+		return h + step > rhs.h + rhs.step;
+	}
+};
+inline int distanc(int x, int y, int xx, int yy) {
+	return abs(x - xx) + abs(y - yy);
+}
+int get_h(int b[][4]) {
+	int sum = 0;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			if (b[i][j] == 0 || (i == goal[b[i][j]][0] && j == goal[b[i][j]][1])) //han 距離為 0
+				continue;
+			//sum += distanc(i, j, goal[b[i][j]][0], goal[b[i][j]][1]);
+			sum += abs(goal[b[i][j]][0] - i) + abs(goal[b[i][j]][1] - j ) ;
+		}
+	}
+	return sum;
+}
+bool isAnswer(int b[][4]){
+	int sum = 0 , z = 0 , x , y ;
+	int tmp[16];
+	for (int i = 0; i < 4; i++){
+		for (int j = 0; j < 4; j++){
+			tmp[z++] = b[i][j];
+			if (b[i][j] == 0)
+				x = i, y = j;
+		}
+	}
+	for (int i = 0; i < 16; i++){
+		for (int j = i + 1; j < 16; j++){
+			if (tmp[j] < tmp[i] && tmp[j] )
+				sum++;
+		}
+	}
+	if ((sum + x) % 2 == 0)
+		return false;
+	return true;
+}
+bool try_to_insert(int b[][4]) {
+	string st;
+	for(int i = 0; i < 4; i++) {
+		for(int j = 0; j < 4; j++) {
+			st.push_back((char)(b[i][j]+'0'));
+		}
+	}
+	if(vis.count(st)) {
+		return false;
+	}
+	return true;
+}
+bool isboard(int x , int y ){
+    if(x >= 0 && x < 4 && y >= 0 && y < 4)
+        return true ;
+    return false ;
+}
+
+bool isback(string path , char nxtD ){
+    if(path.size() == 0) return false ;
+    char D = path[path.size()-1] ;
+    if(D == 'L' && nxtD == 'R' ) return true ;
+    if(D == 'R' && nxtD == 'L' ) return true ;
+    if(D == 'U' && nxtD == 'D' ) return true ;
+    if(D == 'D' && nxtD == 'U' ) return true ;
+    return false ;
+}
+
+char dname[4] = {'R' , 'L' , 'D' , 'U'};
+bool Astart(state a) {
+	priority_queue <state> q;
+	vis.clear();
+	int x, y;
+	state u, v;
+	q.push(a);
+	while (!q.empty()){
+		u = q.top();
+		q.pop();
+		for (int i = 0; i < 4; i++){
+			x = u.x + dx[i];
+			y = u.y + dy[i];
+			v = u;
+			if (isboard(x,y)){
+
+				swap(v.board[x][y], v.board[u.x][u.y]);
+				v.step = u.step + 1;
+				if (v.step > 50)
+					continue;
+                if(isback(v.mov,dname[i])) continue ;
+                v.mov.push_back(dname[i]);
+				v.h = get_h(v.board);
+				v.x = x;
+				v.y = y;
+				if (v.h == 0){
+					printf("%s\n",v.mov.c_str());
+					return true;
+				}
+				if(try_to_insert(v.board)) {
+					q.push(v);
+				}
+			}
+		}
+	}
+	return false;
+}
+int main() {
+#ifdef LOCAL
+    freopen("in1.txt" , "r" , stdin );
+#endif // LOCAL
+	int n = 1, t;
+	//memset(goal,0,sizeof(goal));
+	for (int i = 0; i < 4; i++){
+		for (int j = 0; j < 4; j++){
+			goal[n][0] = i;
+			goal[n++][1] = j;
+		}
+	}
+	scanf("%d",&t);
+	while (t--) {
+		state start;
+		for (int i = 0; i < 4; i++){
+			for (int j = 0; j < 4; j++){
+				scanf("%d",&start.board[i][j]);
+				if (start.board[i][j] == 0)
+					start.x = i, start.y = j;
+			}
+		}
+		if (!isAnswer(start.board) ||  !Astart(start)) {
+			printf("This puzzle is not solvable.\n");
+		}
+
+	}
+	return 0;
+}
