@@ -5,7 +5,7 @@
 using namespace std;
 int n ;
 //unordered_map<string,int> visit ;
-//set<string> visit ; // no set will be AC
+set<string> visit ; // no set will be AC
 int direct[4][4] = {{0,1},{0,-1},{1,0},{-1,0}};
 int place[18][2] ;
 char dname[4] = {'R' , 'L' , 'D' , 'U'};
@@ -55,12 +55,15 @@ bool isrecord(int graph[][4] ){
         for(int j = 0 ; j < 4 ; j++)
             strM.push_back((char) graph[i][j] + '0') ;
     }
-    /*
-    if(visit.count(strM))
+    ///*
+    if(visit.count(strM)){
+        //cout << strM << '\n' ;
         return true ;
-    //visit.insert(strM) ; //TLE key
-    visit[strM] = 1 ;
-    */
+    }
+
+    visit.insert(strM) ; //TLE key
+    //visit[strM] = 1 ;
+    //*/
     return false ;
 }
 
@@ -83,7 +86,8 @@ bool Astar(state input ){
     q.push(input);
     while(!q.empty()){
         now = q.top() ; q.pop() ;
-        //now.print();
+        cout << now.h + now.step << '\n' ;
+        now.print();
         for(int i = 0 ; i < 4 ; i++){
             x = now.x + direct[i][0] ;
             y = now.y + direct[i][1] ;
@@ -105,7 +109,8 @@ bool Astar(state input ){
                     cout << next.path << '\n' ;
                     return true ;
                 }
-                //cout << next.path << '\n' ;
+                cout << next.path << '\n' ;
+
                 //next.print();
             }
         }
@@ -128,6 +133,7 @@ bool issolve(int graph[][4]){
             if(num[j] && num[j] < num[i]) cnt++ ;
         }
     }
+    cout << cnt + x << '\n' ;
     if((cnt+x)%2 ==0)
         return false;
     return true ;

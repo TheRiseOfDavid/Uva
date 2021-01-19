@@ -1,5 +1,6 @@
 # depslib dependency file v1.0
-1609747024 source:d:\program\c++ algorithm\uva\test\main.cpp
+1610258821 source:d:\program\c++ algorithm\uva\test\main.cpp
+	<iostream>
 	<bits/stdc++.h>
 
 1597592075 source:c:\david\uva\test\main.cpp
