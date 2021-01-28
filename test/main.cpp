@@ -12,21 +12,15 @@ struct st{
 };
 
 int32_t main(){
-    /*
-    st b , w ;
-    b.a = 2 ;
-    w.a = 3 ;
-    cout << (b < w) << '\n' ;
-    */
-    ///*
-    priority_queue<st> q ;
-    q.push({2});
-    q.push({3});
-    while(!q.empty()){
-        st c ;
-        c = q.top() ; q.pop() ;
-        cout << c.a << '\n' ;
+    int temp = 0 ;
+    for(int k = 0 ; k < 6000; k++){
+        for(int i = 0; i < 500; i++){
+            for(int j = 0; j < 500; j++){
+                temp++;
+            }
+        }
     }
-    //*/
+
+    cout << temp;
 }
 

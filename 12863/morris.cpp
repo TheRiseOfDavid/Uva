@@ -10,7 +10,7 @@ int V[MAXN][MAXN], R[MAXN][MAXN], C[MAXN][MAXN];
 // V 是成本、R 是可移動的 y 軸、C 是可移動的 x 軸 
 int TX, TY;  
 struct Node { //dijkstra 用到的節點
-    int r, c, v, h; // r=x , c=y , h 等於漢明距離 
+    int r, c, v, h; // r=x , c=y , h 等於漢明距離 , v 是成本
     Node(int a=0, int b=0, int d=0, int e=0): //輸入值可以有這種寫法
     r(a), c(b), v(d), h(e) {} 
     bool operator<(const Node &x) const { //看大衛的筆記 , UVa 10181 
@@ -50,18 +50,18 @@ struct RangeTree { // 2D binary indexed tree，狀態樹 注意，這裡是二�
     void update(int lx, int rx, int ly, int ry, int val, int tot) { // {val: update cost, tot: #unvisited point in area.} //更新最短路徑
         //lx 最大的 x ，rx 最小的 rx
         if (tot == -1) 	
-            tot = rectSum(lx, rx, ly, ry);
-        if (tot == 0) 	return;
-        if (lx == rx) {
-            if (ly == ry) {
-                pQ.push(Node(lx, ly, val + V[lx][ly], abs(lx-TX) + abs(ly-TY)));
+            tot = rectSum(lx, rx, ly, ry); //找區域內有多少節點
+        if (tot == 0) 	return; //已經沒有節點可以走了
+        if (lx == rx) { //進行二分，但因為有 x,y 兩個方向，我們先從 x 開始進行查詢
+            if (ly == ry) { 
+                pQ.push(Node(lx, ly, val + V[lx][ly], abs(lx-TX) + abs(ly-TY))); //
                 modify(lx, ly, -1);
                 return;
             }
-            int cnt = rectSum(lx, rx, ly, (ly + ry)/2);
-            if (cnt) 
+            int cnt = rectSum(lx, rx, ly, (ly + ry)/2); //對 y 二分
+            if (cnt) //會找到中間一半的值
                 update(lx, rx, ly, (ly + ry)/2, val, cnt);
-            if (cnt < tot) 
+            if (cnt < tot) //如果 tot > cnt 表示 cnt 把所有的點都覆蓋住了
                 update(lx, rx, (ly + ry)/2 + 1, ry, val, tot - cnt);
         }
         else {
@@ -116,7 +116,8 @@ int main() {
             
         for (int i = 1; i < q; i++) {
             int r = findPath(n, m, X[i-1], Y[i-1], X[i], Y[i]);
-            printf("%d%c", r, i == q - 1 ? '\n' : ' ');
+            printf("%d%c", r, ' ');
+            //printf("%d%c", r, i == q - 1 ? '\n' : ' ');
         }
     }
     return 0;
