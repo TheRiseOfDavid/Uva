@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1613817386 source:d:\program\c++ algorithm\uva\758\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+

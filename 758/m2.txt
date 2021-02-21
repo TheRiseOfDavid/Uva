@@ -1,0 +1,133 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#define BX 10
+#define BY 15
+#define extra 5
+#define LOCAL
+using namespace std;
+int graph[BX+extra][BY+extra], visit[BX+extra][BY+extra];
+int n, kase = 0;
+string s;
+map<char, int> mp;
+map<int, char> mp2;
+
+int dfs_search(int x, int y, int value){
+    if(x < 0 || y < 0 || x > BX || y > BY) return 0;
+    if(visit[x][y] == 1 || graph[x][y] != value) return 0;
+
+    visit[x][y] = 1;
+    int cnt = 1;
+    cnt += dfs_search(x-1, y, value);
+    cnt += dfs_search(x+1, y, value);
+    cnt += dfs_search(x, y-1, value);
+    cnt += dfs_search(x, y+1, value);
+    return cnt;
+}
+
+void dfs_remove(int x, int y, int value){
+    if(x < 0 || y < 0 || x > BX || y > BY) return;
+    if(graph[x][y] != value) return;
+    graph[x][y] = 0;
+    dfs_remove(x-1, y, value);
+    dfs_remove(x+1, y, value);
+    dfs_remove(x, y-1, value);
+    dfs_remove(x, y+1, value);
+}
+
+void refresh(){
+    int k = 0;
+    for(int i = 0; i < BX; i++){ //rule 1
+        for(int j = 0; j < BY; j++){
+            if(graph[i][j] == 0){
+                k = i+1;
+                while(k < BX){
+                    if(graph[k][j] != 0){
+                        swap(graph[i][j], graph[k][j]);
+                        break;
+                    }
+                    k++;
+                }
+            }
+        }
+    }
+
+    for(int j = 0; j < BY; j++){ //rule2
+        int sum = 0;
+        for(int i = 0; i < BX; i++) sum += graph[i][j];
+        if(sum == 0){
+            k = j+1;
+            while(k < BY){
+                if(graph[0][k] != 0){
+                    for(int i = 0; i < BX; i++) swap(graph[i][j], graph[i][k]);
+                    break;
+                }
+                k++;
+            }
+        }
+    }
+
+}
+
+void visit_debug(){
+    cout << '\n';
+    for(int i = BX-1; i >= 0; i--){
+        for(int j = 0; j <= BY-1; j++) cout << visit[i][j] << ' ';
+        cout << '\n';
+    }
+}
+
+void graph_debug(){
+    cout << '\n';
+    for(int i = BX-1; i >= 0; i--){
+        for(int j = 0; j <= BY-1; j++) cout << mp2[graph[i][j]] << ' ';
+        cout << '\n';
+    }
+}
+
+int main()
+{
+#ifdef LOCAL
+    freopen("in1.txt", "r", stdin);
+    freopen("out.txt", "w", stdout);
+#endif // LOCLA
+    cin >> n;
+    mp['R'] = 1; mp['G'] = 2; mp['B'] = 3;
+    mp2[1] = 'R'; mp2[2] = 'G'; mp2[3] = 'B'; mp2[0] = '0';
+    while(n--){
+        cout << "Game " << ++kase << ":\n\n";
+        for(int i = BX-1; i >= 0; i--){
+            cin >> s;
+            for(int j = 0; j < BY; j++) graph[i][j] = mp[s[j]];
+        }
+
+        int ans = 0, score, step = 1, remain = BX*BY;
+        while(1){
+            int block = 0, max_block = 0, mx, my;
+            memset(visit, 0, sizeof(visit));
+            for(int i = 0; i < BX; i++){
+                for(int j = 0; j < BY; j++){
+                    if(visit[i][j] == 0 && graph[i][j] != 0) block = dfs_search(i, j, graph[i][j]);
+                    if(max_block < block){
+                        max_block = block;
+                        mx = i; my = j;
+                    }
+                }
+            }
+            //visit_debug();
+            //cout << "max_block " << max_block << '\n';
+
+            if(max_block <= 2) break;
+            remain -= max_block;
+            score = (max_block - 2) * (max_block - 2);
+            cout << "Move "<< step++ << " at (" << mx+1 << "," << my+1 << \
+             "): removed " << max_block << " balls of color "<< mp2[graph[mx][my]] << ", got " << score << " points.\n";
+            ans += score;
+            dfs_remove(mx, my, graph[mx][my]);
+            refresh();
+            //graph_debug(); //debug
+        }
+        if(remain == 0) ans += 1000;
+        cout << "Final score: " << ans << ", with " << remain << " balls remaining.\n\n";
+    }
+    return 0;
+}
