@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1621856699 source:d:\program\c++ algorithm\uva\merge_sort\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+

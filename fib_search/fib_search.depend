@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1622463077 source:d:\program\c++ algorithm\uva\fib_search\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+

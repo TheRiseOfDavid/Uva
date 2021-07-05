@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1622395085 source:d:\program\c++ algorithm\uva\heap_sort\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+

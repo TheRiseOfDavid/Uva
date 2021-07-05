@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1621860455 source:d:\program\c++ algorithm\uva\quick_sort\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+
