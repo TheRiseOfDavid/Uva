@@ -2,21 +2,23 @@
 #include <bits/stdc++.h>
 #define LOCAL
 #define MAXN 1000020
+#define int long long
 using namespace std;
 int t, n, k, kase = 0;
-int profit[MAXN]
+int profit[MAXN];
 
-int main()
+int32_t main()
 {
 #ifdef LOCAL
     freopen("in1.txt", "r", stdin);
+    freopen("out.txt", "w", stdout);
 #endif // LOCAL
     cin >> t;
     while(t--){
         cin >> n >> k;
         for(int i = 0; i < n; i++){
             cin >> profit[i];
-            profit *= -1;
+            profit[i] *= -1;
         }
         int y;
         for(int i = 0; i < n; i++){
